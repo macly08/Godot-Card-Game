@@ -1,13 +1,16 @@
 extends Node2D
 
 const COLLISION_MASK_CARD = 1
+const COLLISION_MASK_CARD_SLOT = 2
 
 var screen_size
 var card_being_dragged
 var is_hovering_on_card
+var player_hand_reference
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	player_hand_reference = $"../PlayerHand"
 	screen_size = get_viewport_rect().size
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,7 +27,8 @@ func _input(event):
 			if card:
 				start_drag(card)
 		else:
-			finish_drag()
+			if card_being_dragged:
+				finish_drag()
 			
 func start_drag(card):
 	card_being_dragged = card
@@ -32,6 +36,15 @@ func start_drag(card):
 	
 func finish_drag():
 	card_being_dragged.scale = Vector2(1.1, 1.1)
+	var card_slot_found = raycast_check_for_card_slot()
+	if card_slot_found and not card_slot_found.card_in_slot:
+		player_hand_reference.remove_card_from_hand(card_being_dragged)
+		#Card dropped in empty card slot
+		card_being_dragged.position = card_slot_found.position
+		card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true
+		card_slot_found.card_in_slot = true
+	else:
+		player_hand_reference.add_card_to_hand(card_being_dragged)
 	card_being_dragged = null
 	
 func connect_card_signals(card):
@@ -75,6 +88,17 @@ func raycast_check_for_card():
 		return get_card_with_highest_z(result)
 	return null
 	
+	
+func raycast_check_for_card_slot():
+	var space_state = get_world_2d().direct_space_state
+	var parameters = PhysicsPointQueryParameters2D.new()
+	parameters.position = get_global_mouse_position()
+	parameters.collide_with_areas = true
+	parameters.collision_mask = COLLISION_MASK_CARD_SLOT
+	var result = space_state.intersect_point(parameters)
+	if result.size() > 0:
+		return result[0].collider.get_parent()
+	return null
 	
 func get_card_with_highest_z(cards):
 	var highest_z_card = cards[0].collider.get_parent()
