@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://be5l8x2t674od" path="res://Scenes/CardSlot.tscn" id="3_1oyt1"]
 [ext_resource type="Script" path="res://PlayerHand.gd" id="3_2mihy"]
 [ext_resource type="Script" path="res://Deck.gd" id="4_5703y"]
-[ext_resource type="Texture2D" uid="uid://cm2nd7h2577eu" path="res://CardGameResources/Assets/Images/Deck.png" id="5_knuoy"]
+[ext_resource type="Texture2D" uid="uid://df0jreki0tqpb" path="res://CardGameResources/Assets/Images/Deck.png" id="5_knuoy"]
 [ext_resource type="Script" path="res://InputManager.gd" id="6_yn544"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ujp0y"]
