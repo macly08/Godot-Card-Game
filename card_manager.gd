@@ -3,6 +3,9 @@ extends Node2D
 const COLLISION_MASK_CARD = 1
 const COLLISION_MASK_CARD_SLOT = 2
 const DEFAULT_CARD_MOVE_SPEED = 0.1
+const DEFAULT_CARD_SCALE = 1.0
+const HIGHLIGHTED_CARD_SCALE = 1.1
+const INPLAY_CARD_SCALE = .95
 
 var screen_size
 var card_being_dragged
@@ -25,17 +28,23 @@ func _process(delta: float) -> void:
 			
 func start_drag(card):
 	card_being_dragged = card
-	card.scale = Vector2(1, 1)
+	card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
 	
 func finish_drag():
-	card_being_dragged.scale = Vector2(1.1, 1.1)
+	card_being_dragged.scale = Vector2(HIGHLIGHTED_CARD_SCALE, HIGHLIGHTED_CARD_SCALE)
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found and not card_slot_found.card_in_slot:
+		# card was dropped in empty card slot
+		card_being_dragged.scale = Vector2(INPLAY_CARD_SCALE, INPLAY_CARD_SCALE)
+		card_being_dragged.z_index = -1
+		is_hovering_on_card = false
+		card_being_dragged.in_card_slot = card_slot_found
 		player_hand_reference.remove_card_from_hand(card_being_dragged)
-		#Card dropped in empty card slot
 		card_being_dragged.position = card_slot_found.position
 		card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true
 		card_slot_found.card_in_slot = true
+		card_being_dragged = null
+		return
 	else:
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	card_being_dragged = null
@@ -55,7 +64,8 @@ func on_hover_over_card(card):
 		highlight_card(card, true)
 	
 func on_hover_off_card(card):
-	if !card_being_dragged:
+	# check if card is NOT: in a card slot AND NOT being dragged
+	if !card.in_card_slot && !card_being_dragged:
 		highlight_card(card, false)
 		#Checks if we hover off a card straight onto another card
 		var new_card_hovered = raycast_check_for_card()
@@ -66,10 +76,10 @@ func on_hover_off_card(card):
 	
 func highlight_card(card, hovered):
 	if hovered:
-		card.scale = Vector2(1.1, 1.1)
+		card.scale = Vector2(HIGHLIGHTED_CARD_SCALE, HIGHLIGHTED_CARD_SCALE)
 		card.z_index = 2
 	else:
-		card.scale = Vector2(1, 1)
+		card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
 		card.z_index = 1
 		
 ## Checks if the mouse is hovering over a card, called in _process after checking

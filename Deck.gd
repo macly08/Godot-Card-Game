@@ -2,10 +2,11 @@ extends Node2D
 
 const CARD_SCENE_PATH = "res://Scenes/card.tscn"
 const CARD_DRAW_SPEED = .35
+const STARTING_HAND_SIZE = 5
 
 var player_deck = []
-
 var card_data_reference
+var drawn_card_this_turn = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -23,12 +24,20 @@ func initialize_deck():
 			#print("new card added to deck: " + str(new_card[0]) + str(new_card[1]))
 			player_deck.append(new_card)
 	shuffle_deck()
+	for i in range(STARTING_HAND_SIZE):
+		draw_card()
+		drawn_card_this_turn = false
+	drawn_card_this_turn = true
 			
 func shuffle_deck():
 	player_deck.shuffle()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func draw_card():
+	if drawn_card_this_turn:
+		return
+	drawn_card_this_turn = true	
+	
 	var card_drawn = player_deck[0]
 	player_deck.erase(card_drawn)
 	
