@@ -6,6 +6,7 @@ signal hovered_off
 var hand_position
 var in_card_slot
 
+#Tuple of [value, suit].
 var card_values
 
 # Called when the node enters the scene tree for the first time.

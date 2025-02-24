@@ -18,6 +18,9 @@ func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	$"../InputManager".connect("left_mouse_button_released", on_left_mouse_button_released)
 
+#This card manager script is (mostly) from this playlist:
+#https://www.youtube.com/watch?v=2jMcuKdRh2w&list=PLNWIwxsLZ-LMYzxHlVb7v5Xo5KaUV7Tq1&ab_channel=Barry%27sDevelopmentHell
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if card_being_dragged:
@@ -25,7 +28,6 @@ func _process(delta: float) -> void:
 		card_being_dragged.position = Vector2(clamp(mouse_pos.x, 0, screen_size.x),
 			clamp(mouse_pos.y, 0, screen_size.y)) 
 
-			
 func start_drag(card):
 	card_being_dragged = card
 	card.scale = Vector2(DEFAULT_CARD_SCALE, DEFAULT_CARD_SCALE)
@@ -57,7 +59,6 @@ func on_left_mouse_button_released():
 	if card_being_dragged:
 		finish_drag()
 
-	
 func on_hover_over_card(card):
 	if !is_hovering_on_card:
 		is_hovering_on_card = true

@@ -21,6 +21,8 @@ func _input(event):
 		else:
 			emit_signal("left_mouse_button_released")
 
+#This is also from the card game playlist:
+#https://www.youtube.com/watch?v=2jMcuKdRh2w&list=PLNWIwxsLZ-LMYzxHlVb7v5Xo5KaUV7Tq1&ab_channel=Barry%27sDevelopmentHell
 
 # Checks if the mouse is hovering over a card, called in _process after checking
 # for LMB input. Returns card object if card otherwise returns null

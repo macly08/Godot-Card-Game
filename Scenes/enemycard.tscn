@@ -1,11 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbdmxd341nnhn"]
+[gd_scene load_steps=7 format=3 uid="uid://cixbiqxqdewpy"]
 
-[ext_resource type="Script" path="res://Card.gd" id="1_x3xrt"]
-[ext_resource type="Texture2D" uid="uid://celev5aye03g8" path="res://CardGameResources/Assets/Images/Card.png" id="2_4hd3d"]
-[ext_resource type="Texture2D" uid="uid://cm2nd7h2577eu" path="res://CardGameResources/Assets/Images/Deck.png" id="2_wbtaa"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cl6w7"]
-size = Vector2(65, 96)
+[ext_resource type="Script" path="res://Card.gd" id="1_0kawh"]
+[ext_resource type="Texture2D" uid="uid://cm2nd7h2577eu" path="res://CardGameResources/Assets/Images/Deck.png" id="2_fug5l"]
+[ext_resource type="Texture2D" uid="uid://celev5aye03g8" path="res://CardGameResources/Assets/Images/Card.png" id="3_2wr1j"]
 
 [sub_resource type="Animation" id="Animation_1uf5s"]
 length = 0.001
@@ -189,19 +186,14 @@ _data = {
 
 [node name="Card" type="Node2D"]
 position = Vector2(150, 890)
-script = ExtResource("1_x3xrt")
+script = ExtResource("1_0kawh")
 
 [node name="CardImageBack" type="Sprite2D" parent="."]
-texture = ExtResource("2_wbtaa")
+texture = ExtResource("2_fug5l")
+script = ExtResource("1_0kawh")
 
 [node name="CardImage" type="Sprite2D" parent="."]
-texture = ExtResource("2_4hd3d")
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.5, 1)
-shape = SubResource("RectangleShape2D_cl6w7")
+texture = ExtResource("3_2wr1j")
 
 [node name="Value" type="RichTextLabel" parent="."]
 modulate = Color(0, 0, 0, 0)
@@ -217,7 +209,3 @@ text = "0"
 libraries = {
 "": SubResource("AnimationLibrary_proib")
 }
-
-[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
