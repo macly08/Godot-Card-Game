@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxp2wfslgwymt"]
+
+[ext_resource type="PackedScene" uid="uid://1vl08t4ulppt" path="res://Scenes/CardMechanics.tscn" id="1_hsyf5"]
+[ext_resource type="Script" path="res://Scenes/BlackjackGameManager.gd" id="2_a2uf2"]
+
+[node name="Main" instance=ExtResource("1_hsyf5")]
+
+[node name="Deck" parent="." index="4"]
+position = Vector2(691.975, 528)
+
+[node name="EndTurnButton" parent="." index="6"]
+offset_left = 652.0
+offset_top = 338.0
+offset_right = 730.0
+offset_bottom = 369.0
+
+[node name="CardGameManager" parent="." index="7"]
+script = ExtResource("2_a2uf2")
+
+[node name="HitButton" type="Button" parent="." index="9"]
+offset_left = 609.0
+offset_top = 617.0
+offset_right = 640.0
+offset_bottom = 648.0
+text = "Hit"
+metadata/_edit_use_anchors_ = true
+
+[node name="StandButton" type="Button" parent="." index="10"]
+offset_left = 717.0
+offset_top = 616.0
+offset_right = 770.0
+offset_bottom = 647.0
+text = "Stand"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="HitButton" to="CardGameManager" method="_on_hit_button_pressed"]
+[connection signal="pressed" from="StandButton" to="CardGameManager" method="_on_stand_button_pressed"]

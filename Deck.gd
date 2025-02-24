@@ -2,18 +2,20 @@ extends Node2D
 
 const CARD_SCENE_PATH = "res://Scenes/card.tscn"
 const CARD_DRAW_SPEED = .35
-const STARTING_HAND_SIZE = 5
 
+var starting_hand_size = 0
 var player_deck = []
 var card_data_reference
-var drawn_card_this_turn = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#print($Area2D.collision_mask)
+	$"../CardGameManager".init_gamerules()
+	starting_hand_size = $"../CardGameManager".start_draw_size
 	card_data_reference = preload("res://CardData.gd")
 	initialize_deck()
 	$RichTextLabel.text = str(player_deck.size())
+	
 
 func initialize_deck():
 	for i in range (0, 4):
@@ -24,19 +26,17 @@ func initialize_deck():
 			#print("new card added to deck: " + str(new_card[0]) + str(new_card[1]))
 			player_deck.append(new_card)
 	shuffle_deck()
-	for i in range(STARTING_HAND_SIZE):
-		draw_card()
-		drawn_card_this_turn = false
-	drawn_card_this_turn = true
+#	print("start hand size is: ", starting_hand_size)
 			
 func shuffle_deck():
 	player_deck.shuffle()
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func draw_card():
-	if drawn_card_this_turn:
+# draws card to playerHand
+func draw_card(hand: Node2D = $"../PlayerHand"):
+	if !$"../CardGameManager".draw_allowed():
 		return
-	drawn_card_this_turn = true	
+	
+	print("drawing card")
 	
 	var card_drawn = player_deck[0]
 	player_deck.erase(card_drawn)
@@ -55,7 +55,8 @@ func draw_card():
 	new_card.get_node("SuitImage").texture = load(card_image_path)
 	#new_card.get_node("Suit").text = str(card_drawn[1])
 	new_card.get_node("Value").text = str(card_drawn[0])
+	new_card.card_values = card_drawn
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
-	$"../PlayerHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
+	hand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
 	new_card.get_node("AnimationPlayer").play("card_flip")
