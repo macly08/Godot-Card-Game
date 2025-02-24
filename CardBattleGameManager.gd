@@ -26,7 +26,7 @@ func player_turn():
 	var card = $"../PlayerHand".pick_random_card()
 	var damage = $"../PlayerHand".play_card(card)
 	enemy_hp -= damage
-	get_node("EnemyHP").text = str(enemy_hp)
+	get_node("EnemyHP").text = "Enemy HP: " + str(enemy_hp)
 	await get_tree().create_timer(2).timeout
 	if enemy_hp < 0:
 		end_game()
@@ -37,7 +37,7 @@ func opponent_turn():
 	var enemy_card = $"../EnemyHand".pick_random_card()
 	var damage = $"../EnemyHand".play_card(enemy_card)
 	player_hp -= damage
-	get_node("PlayerHP").text = str(player_hp)
+	get_node("PlayerHP").text = "Your HP: " + str(player_hp)
 	await get_tree().create_timer(2).timeout
 	if player_hp < 0:
 		end_game()

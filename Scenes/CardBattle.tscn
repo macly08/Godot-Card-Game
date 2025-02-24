@@ -54,20 +54,20 @@ script = ExtResource("3_kg26c")
 script = ExtResource("4_np54o")
 
 [node name="PlayerHP" type="RichTextLabel" parent="CardGameManager"]
-offset_left = 1700.0
+offset_left = 1471.0
 offset_top = 720.0
-offset_right = 1740.0
+offset_right = 1599.0
 offset_bottom = 760.0
 scale = Vector2(3, 3)
-text = "50"
+text = "Your HP: 50"
 
 [node name="EnemyHP" type="RichTextLabel" parent="CardGameManager"]
-offset_left = 1700.0
+offset_left = 1471.0
 offset_top = 300.0
-offset_right = 1740.0
+offset_right = 1605.0
 offset_bottom = 340.0
 scale = Vector2(3, 3)
-text = "50"
+text = "Enemy HP: 50"
 
 [node name="GameOverLabel" type="RichTextLabel" parent="CardGameManager"]
 modulate = Color(1, 1, 1, 0)
