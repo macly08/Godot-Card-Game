@@ -9,14 +9,14 @@ var card_data_reference
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#print($Area2D.collision_mask)
 	$"../CardGameManager".init_gamerules()
 	starting_hand_size = $"../CardGameManager".start_draw_size
 	card_data_reference = preload("res://CardData.gd")
 	initialize_deck()
 	$RichTextLabel.text = str(player_deck.size())
 	
-
+#Sets up the deck: 4 suits, 13 cards each, and puts them
+#in the 'player_deck' list.
 func initialize_deck():
 	for i in range (0, 4):
 		for j in range (0, 13):
@@ -28,16 +28,18 @@ func initialize_deck():
 	shuffle_deck()
 #	print("start hand size is: ", starting_hand_size)
 			
+#uses built in shuffle method to randomize the list of cards.
 func shuffle_deck():
 	player_deck.shuffle()
 	
 # draws card to playerHand
-func draw_card(hand: Node2D = $"../PlayerHand"):
+func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 	if !$"../CardGameManager".draw_allowed():
 		return
 	
 	print("drawing card")
 	
+	#grab the 'top' card of the deck and take it out of the deck
 	var card_drawn = player_deck[0]
 	player_deck.erase(card_drawn)
 	
@@ -47,9 +49,13 @@ func draw_card(hand: Node2D = $"../PlayerHand"):
 		$Sprite2D.visible = false
 		$RichTextLabel.visible = false
 	
+	#Some of this is from the playlist:
+	#https://www.youtube.com/watch?v=2jMcuKdRh2w&list=PLNWIwxsLZ-LMYzxHlVb7v5Xo5KaUV7Tq1&ab_channel=Barry%27sDevelopmentHell
+	
 	$RichTextLabel.text = str(player_deck.size())
 	var card_scene = preload(CARD_SCENE_PATH)
 	var new_card = card_scene.instantiate()
+	
 	#Display proper info on the card
 	var card_image_path = str("res://CardGameResources/Assets/Images/"+str(card_drawn[1])+".png")
 	new_card.get_node("SuitImage").texture = load(card_image_path)
@@ -59,4 +65,11 @@ func draw_card(hand: Node2D = $"../PlayerHand"):
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
 	hand.add_card_to_hand(new_card, CARD_DRAW_SPEED)
-	new_card.get_node("AnimationPlayer").play("card_flip")
+	
+	#If the card isn't yours, you can only see the back and you can't click it!
+	if !is_my_card:
+		print("not my card")
+		new_card.get_node("CardImageBack").z_index = 1
+		new_card.get_node("Area2D").process_mode = Node.PROCESS_MODE_DISABLED
+	else:
+		new_card.get_node("AnimationPlayer").play("card_flip")

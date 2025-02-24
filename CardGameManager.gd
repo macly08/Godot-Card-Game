@@ -19,6 +19,9 @@ func draw_allowed() -> bool:
 
 func _on_end_turn_button_pressed() -> void:
 	opponent_turn()
+
+func player_turn():
+	pass
 	
 func opponent_turn():
 	pass
@@ -30,3 +33,6 @@ func disable_button(button: Button) -> void:
 func enable_button(button: Button) -> void:
 	button.disabled = false
 	button.visible = true
+	
+func end_game():
+	pass
