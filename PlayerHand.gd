@@ -59,3 +59,11 @@ func play_card(card) -> int:
 	var val = player_hand[card].card_values[0]
 	remove_card_from_hand(player_hand[card])
 	return val
+
+################################ End of referenced Code #######################################
+
+# To-do: Make generic class for hand's? this is bad design LOL
+func clear_hand():
+	for i in range(player_hand.size() -1, -1, -1):
+		remove_card_from_hand(player_hand[i])
+		

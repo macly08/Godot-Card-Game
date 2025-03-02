@@ -44,6 +44,12 @@ func remove_card_from_hand(card):
 		card.queue_free()
 		update_hand_positions(DEFAULT_CARD_MOVE_SPEED)
 		
+func clear_hand():
+	var i = player_hand.length()
+	while i > 0:
+		remove_card_from_hand(player_hand[i-1])
+		--i
+		
 func pick_random_card() -> int:
 	var rng = RandomNumberGenerator.new()
 	var card = int(rng.randf_range(0, player_hand.size()))
