@@ -10,7 +10,6 @@ var dealer_hand = []
 func init_gamerules():
 	start_draw_size = 1
 	init_timer(dealer_timer)
-	pass
 
 func init_timer(t: float):
 	game_timer = $"../GameTimer"
@@ -33,8 +32,6 @@ func start_round():
 	var new_card = $"../Deck".draw_card(false, $"../EnemyHand")
 	new_card.get_node("AnimationPlayer").play("card_flip")
 	dealer_hand.append(new_card)
-	
-	
 	super.enable_button($"../HitButton")
 	super.enable_button($"../StandButton")
 	
@@ -44,6 +41,8 @@ func end_round():
 	
 func reset_board():
 	$"../PlayerHand".clear_hand()
+	$"../EnemyHand".clear_hand()
+	dealer_hand.clear()
 
 func hit():
 	$"../Deck".draw_card(true)
@@ -67,7 +66,6 @@ func stand():
 	super.disable_button($"../HitButton")
 	super.disable_button($"../StandButton")
 	dealer_turn()
-	pass
 
 func _on_hit_button_pressed() -> void:
 	hit()

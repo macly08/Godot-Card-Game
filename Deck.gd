@@ -40,6 +40,7 @@ func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 	print("drawing card")
 	
 	#grab the 'top' card of the deck and take it out of the deck
+	# TODO crashes when deck has no cards left, make exception
 	var card_drawn = player_deck[0]
 	player_deck.erase(card_drawn)
 	
