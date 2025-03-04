@@ -4,8 +4,9 @@ const BLACKJACK_VAL = 21
 const DEALER_MIN	= 17
 const dealer_timer	= 0.5
 
-var hand_total
 var dealer_hand = []
+
+var dealer_num_ref
 
 func init_gamerules():
 	start_draw_size = 1
@@ -20,6 +21,7 @@ func init_timer(t: float):
 func _ready() -> void:
 	super.disable_button($"../EndTurnButton")
 	game_status_text = $"../GameStatusRichTextLabel"
+	dealer_num_ref = $"../PlayerHand/DealerTotalRichTextLabel"
 	start_draw_size = 1
 	start_round()
 	
@@ -36,6 +38,18 @@ func start_round():
 	super.enable_button($"../StandButton")
 	
 func end_round():
+	var player_total = get_hand_total($"../PlayerHand".player_hand)
+	var dealer_total = get_hand_total(dealer_hand)
+	if player_total > BLACKJACK_VAL:
+		game_status_text.text = "[center]You're Busted!\nPlay Again?[/center]"
+	elif dealer_total > BLACKJACK_VAL:
+		game_status_text.text = "[center]Dealer Bust! You WIN!!!\nPlay Again?[/center]"
+	elif player_total > dealer_total:
+		game_status_text.text = "[center]Wahoo! You WIN!!!\nPlay Again?[/center]"
+	elif player_total == dealer_total:
+		game_status_text.text = "[center]Push.\nPlay Again?[/center]"
+	else: # player_total < dealer_total
+		game_status_text.text = "[center]You Lose!\nPlay Again?[/center]"
 	super.enable_button($"../RetryButton")
 	
 	
@@ -43,11 +57,14 @@ func reset_board():
 	$"../PlayerHand".clear_hand()
 	$"../EnemyHand".clear_hand()
 	dealer_hand.clear()
+	game_status_text.text = ""
+	$"../PlayerHand/PlayerTotalRichTextLabel".text = str(0)
+	dealer_num_ref.text = str(0)
 
 func hit():
 	$"../Deck".draw_card(true)
 	more_draws_allowed = false
-	var label = $"../PlayerHand/PlayerTotalRichTextLabel".text
+	var label = $"../PlayerHand/PlayerTotalRichTextLabel"
 	var hand_total = get_hand_total($"../PlayerHand".player_hand, label)
 	super.disable_button($"../HitButton")
 	super.disable_button($"../StandButton")
@@ -90,7 +107,7 @@ func dealer_turn():
 		await game_timer
 		dealer_hand[0].get_node("AnimationPlayer").play("card_flip")
 	# Get dealer's total and play according to rules
-	var dealer_total = get_hand_total(dealer_hand)
+	var dealer_total = get_hand_total(dealer_hand, dealer_num_ref)
 	if dealer_total >= DEALER_MIN:
 		end_round()
 	else:
@@ -110,6 +127,6 @@ func get_hand_total(hand, label = null):
 	for card in hand:
 		total += card.card_values[0]
 	if label:
-		label = str(total)
+		label.text = str(total)
 		print("set label text")
 	return total

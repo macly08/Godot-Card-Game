@@ -63,16 +63,11 @@ func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 	#new_card.get_node("Suit").text = str(card_drawn[1])
 	var val_text = ""
 	match card_drawn[0]:
-		11: 
-			val_text = "J"
-		12:
-			val_text = "Q"
-		13:
-			val_text = "K"
-		14:
-			val_text = "A"
-		_:
-			val_text = str(card_drawn[0])
+		11: val_text = "J"
+		12:	val_text = "Q"
+		13:	val_text = "K"
+		14:	val_text = "A"
+		_:	val_text = str(card_drawn[0])
 			
 	new_card.get_node("Value").text = val_text
 	new_card.card_values = card_drawn

@@ -24,7 +24,9 @@ offset_left = 341.0
 offset_top = 312.0
 offset_right = 472.0
 offset_bottom = 352.0
-text = "Dealer Total: "
+bbcode_enabled = true
+text = "[center]Dealer Total: 0[/center]"
+fit_content = true
 
 [node name="EnemyHand" type="Node2D" parent="." index="4"]
 script = ExtResource("2_or1ju")
@@ -69,6 +71,7 @@ offset_left = 465.0
 offset_top = 206.0
 offset_right = 915.0
 offset_bottom = 406.0
+bbcode_enabled = true
 
 [connection signal="pressed" from="HitButton" to="CardGameManager" method="_on_hit_button_pressed"]
 [connection signal="pressed" from="StandButton" to="CardGameManager" method="_on_stand_button_pressed"]
