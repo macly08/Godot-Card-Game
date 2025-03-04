@@ -21,7 +21,7 @@ func init_timer(t: float):
 func _ready() -> void:
 	super.disable_button($"../EndTurnButton")
 	game_status_text = $"../GameStatusRichTextLabel"
-	dealer_num_ref = $"../PlayerHand/DealerTotalRichTextLabel"
+	dealer_num_ref = $"../HandLabels/DealerTotalRichTextLabel"
 	start_draw_size = 1
 	start_round()
 	
@@ -58,13 +58,13 @@ func reset_board():
 	$"../EnemyHand".clear_hand()
 	dealer_hand.clear()
 	game_status_text.text = ""
-	$"../PlayerHand/PlayerTotalRichTextLabel".text = str(0)
+	$"../HandLabels/PlayerTotalRichTextLabel".text = str(0)
 	dealer_num_ref.text = str(0)
 
 func hit():
 	$"../Deck".draw_card(true)
 	more_draws_allowed = false
-	var label = $"../PlayerHand/PlayerTotalRichTextLabel"
+	var label = $"../HandLabels/PlayerTotalRichTextLabel"
 	var hand_total = get_hand_total($"../PlayerHand".player_hand, label)
 	super.disable_button($"../HitButton")
 	super.disable_button($"../StandButton")
@@ -125,7 +125,13 @@ func dealer_turn():
 func get_hand_total(hand, label = null):
 	var total = 0
 	for card in hand:
-		total += card.card_values[0]
+		var card_val = card.card_values[0]
+		if card_val == 14:
+			continue
+		elif card_val > 10 :
+			total += 10
+		else:
+			total += card_val
 	if label:
 		label.text = str(total)
 		print("set label text")
