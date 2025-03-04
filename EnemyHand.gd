@@ -10,7 +10,7 @@ var center_screen_x
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	center_screen_x = get_viewport().size.x / 2
-	hand_y_pos = $".".global_position[1]
+	# hand_y_pos = $".".global_position[1]
 	print("center screen_x is:", center_screen_x )
 	
 func add_card_to_hand(card, speed):
