@@ -40,6 +40,7 @@ func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 	print("drawing card")
 	
 	#grab the 'top' card of the deck and take it out of the deck
+	# TODO crashes when deck has no cards left, make exception
 	var card_drawn = player_deck[0]
 	player_deck.erase(card_drawn)
 	
@@ -60,7 +61,15 @@ func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 	var card_image_path = str("res://CardGameResources/Assets/Images/"+str(card_drawn[1])+".png")
 	new_card.get_node("SuitImage").texture = load(card_image_path)
 	#new_card.get_node("Suit").text = str(card_drawn[1])
-	new_card.get_node("Value").text = str(card_drawn[0])
+	var val_text = ""
+	match card_drawn[0]:
+		11: val_text = "J"
+		12:	val_text = "Q"
+		13:	val_text = "K"
+		14:	val_text = "A"
+		_:	val_text = str(card_drawn[0])
+			
+	new_card.get_node("Value").text = val_text
 	new_card.card_values = card_drawn
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
@@ -68,8 +77,10 @@ func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 	
 	#If the card isn't yours, you can only see the back and you can't click it!
 	if !is_my_card:
-		print("not my card")
+#		print("not my card")
 		new_card.get_node("CardImageBack").z_index = 1
 		new_card.get_node("Area2D").process_mode = Node.PROCESS_MODE_DISABLED
 	else:
 		new_card.get_node("AnimationPlayer").play("card_flip")
+		
+	return new_card
