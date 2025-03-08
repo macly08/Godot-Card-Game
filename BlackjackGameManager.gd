@@ -4,6 +4,8 @@ const BLACKJACK_VAL = 21
 const DEALER_MIN	= 17
 const dealer_timer	= 0.5
 
+var hand_y_pos = 390
+
 var dealer_hand = []
 
 var dealer_num_ref

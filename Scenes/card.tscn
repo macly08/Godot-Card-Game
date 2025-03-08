@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Card.gd" id="1_x3xrt"]
 [ext_resource type="Texture2D" uid="uid://celev5aye03g8" path="res://CardGameResources/Assets/Images/Card.png" id="2_4hd3d"]
-[ext_resource type="Texture2D" uid="uid://df0jreki0tqpb" path="res://CardGameResources/Assets/Images/Deck.png" id="2_wbtaa"]
+[ext_resource type="Texture2D" uid="uid://cm2nd7h2577eu" path="res://CardGameResources/Assets/Images/Deck.png" id="2_wbtaa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cl6w7"]
 size = Vector2(65, 96)
