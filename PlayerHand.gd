@@ -51,7 +51,6 @@ func display_card_values():
 func pick_random_card() -> int:
 	var rng = RandomNumberGenerator.new()
 	var card = int(rng.randf_range(0, player_hand.size()))
-	print(card)
 	return card
 
 #'Plays' a card: (just returns the value of the card for now)
