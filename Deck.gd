@@ -53,7 +53,7 @@ func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 	#Some of this is from the playlist:
 	#https://www.youtube.com/watch?v=2jMcuKdRh2w&list=PLNWIwxsLZ-LMYzxHlVb7v5Xo5KaUV7Tq1&ab_channel=Barry%27sDevelopmentHell
 	
-	$RichTextLabel.text = str(player_deck.size())
+	$RichTextLabel.text = '[center]' + str(player_deck.size()) + '[/center]'
 	var card_scene = preload(CARD_SCENE_PATH)
 	var new_card = card_scene.instantiate()
 	
@@ -69,7 +69,7 @@ func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 		14:	val_text = "A"
 		_:	val_text = str(card_drawn[0])
 			
-	new_card.get_node("Value").text = val_text
+	new_card.get_node("Value").text = '[center]' + val_text + '[/center]'
 	new_card.card_values = card_drawn
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
