@@ -54,10 +54,9 @@ func pick_random_card() -> int:
 	return card
 
 #'Plays' a card: (just returns the value of the card for now)
-func play_card(card) -> int:
-	var val = player_hand[card].card_values[0]
-	remove_card_from_hand(player_hand[card])
-	return val
+func play_card(card) -> Array:
+	remove_card_from_hand(card)
+	return card.card_values
 
 ################################ End of referenced Code #######################################
 

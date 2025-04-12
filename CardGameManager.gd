@@ -5,6 +5,7 @@ var start_draw_size = 5
 var more_draws_allowed = false
 var game_timer
 var game_status_text
+var can_play_card
 
 func init_timer(t: float):
 	pass
@@ -37,4 +38,7 @@ func disable_button(button: Button) -> void:
 func enable_button(button: Button) -> void:
 	button.disabled = false
 	button.visible = true
+	
+func get_card_clicked(card):
+	pass
 	

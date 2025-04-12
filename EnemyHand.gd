@@ -49,9 +49,9 @@ func clear_hand():
 	for i in range(player_hand.size() -1, -1, -1):
 		remove_card_from_hand(player_hand[i])
 		
-func pick_random_card() -> int:
+func pick_random_card() -> Node:
 	var rng = RandomNumberGenerator.new()
-	var card = int(rng.randf_range(0, player_hand.size()))
+	var card = player_hand[int(rng.randf_range(0, player_hand.size()))]
 	print(card)
 	return card
 

@@ -75,6 +75,13 @@ func on_hover_off_card(card):
 		else:
 			is_hovering_on_card = false
 	
+func card_clicked(card):
+	var card_game_manager = get_node("../CardGameManager")
+	if card_game_manager.can_play_card == true:
+		card_game_manager.get_card_clicked(card)
+	else:
+		print("not your turn!")
+
 func highlight_card(card, hovered):
 	if hovered:
 		card.scale = Vector2(HIGHLIGHTED_CARD_SCALE, HIGHLIGHTED_CARD_SCALE)
@@ -96,8 +103,7 @@ func raycast_check_for_card():
 		#return (result[0].collider.get_parent())
 		return get_card_with_highest_z(result)
 	return null
-	
-	
+
 func raycast_check_for_card_slot():
 	var space_state = get_world_2d().direct_space_state
 	var parameters = PhysicsPointQueryParameters2D.new()
