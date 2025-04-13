@@ -2,9 +2,11 @@ extends Node2D
 
 signal hovered
 signal hovered_off
+signal card_clicked
 
 var hand_position
 var in_card_slot
+var primed = false
 
 #Tuple of [value, suit].
 var card_values
@@ -21,3 +23,4 @@ func _on_area_2d_mouse_entered() -> void:
 
 func _on_area_2d_mouse_exited() -> void:
 	emit_signal("hovered_off", self)
+		
