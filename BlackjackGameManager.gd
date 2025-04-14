@@ -42,13 +42,20 @@ func start_round():
 func end_round():
 	var player_total = get_hand_total($"../PlayerHand".player_hand)
 	var dealer_total = get_hand_total(dealer_hand)
-	if player_total[0] > BLACKJACK_VAL:
+	var player_score = player_total[1]
+	var dealer_score = dealer_total[1]
+	if player_total[1] > BLACKJACK_VAL:
+		player_score = player_total[0]
+	if dealer_total[1] > BLACKJACK_VAL:
+		dealer_score = dealer_total[0]
+		
+	if player_score > BLACKJACK_VAL:
 		game_status_text.text = "[center]You're Busted!\nPlay Again?[/center]"
-	elif dealer_total[0] > BLACKJACK_VAL:
+	elif dealer_score > BLACKJACK_VAL:
 		game_status_text.text = "[center]Dealer Bust! You WIN!!!\nPlay Again?[/center]"
-	elif player_total[1] > dealer_total[1]:
+	elif player_score > dealer_score:
 		game_status_text.text = "[center]Wahoo! You WIN!!!\nPlay Again?[/center]"
-	elif player_total[1] == dealer_total[1]:
+	elif player_score == dealer_score:
 		game_status_text.text = "[center]Push.\nPlay Again?[/center]"
 	else: # player_total < dealer_total
 		game_status_text.text = "[center]You Lose!\nPlay Again?[/center]"
@@ -90,32 +97,28 @@ func _on_hit_button_pressed() -> void:
 	hit()
 	print("hit button")
 
-
 func _on_stand_button_pressed() -> void:
 	stand()
-	pass # Replace with function body.
-
 
 func _on_retry_button_pressed() -> void:
 	reset_board()
 	start_round()
-	pass # Replace with function body.
-	
 	
 func dealer_turn():
 	# If dealer hasn't revealed first card, reveal it
 	if dealer_hand.size() == 2:
 		game_timer.start()
-		await game_timer
+		await game_timer.timeout
 		dealer_hand[0].get_node("AnimationPlayer").play("card_flip")
 	# Get dealer's total and play according to rules
 	var dealer_total = get_hand_total(dealer_hand, dealer_num_ref)
+	# if Dealer has reached stop value
 	if dealer_total[1] >= DEALER_MIN:
 		end_round()
 	else:
 		game_timer.start()
-		await game_timer
-		more_draws_allowed = true
+		await game_timer.timeout
+		
 		var new_card = $"../Deck".draw_card(false, $"../EnemyHand")
 		more_draws_allowed = true
 		dealer_hand.append(new_card)

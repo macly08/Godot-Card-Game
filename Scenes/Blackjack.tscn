@@ -50,6 +50,10 @@ text = "Retry"
 [node name="CardGameManager" parent="." index="11"]
 script = ExtResource("2_a2uf2")
 
+[node name="GameTimer" parent="." index="12"]
+wait_time = 0.25
+one_shot = true
+
 [node name="GameStatusRichTextLabel" type="RichTextLabel" parent="." index="13"]
 offset_left = 465.0
 offset_top = 206.0
