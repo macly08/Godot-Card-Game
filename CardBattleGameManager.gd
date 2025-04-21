@@ -27,6 +27,21 @@ const player_played_card_y = 600
 const enemy_played_card_x = 960
 const enemy_played_card_y = 400
 
+@export var hit_sound : AudioStream
+@onready var hit_audio = $"HitAudio"
+
+@export var heal_sound : AudioStream
+@onready var heal_audio = $HealAudio
+
+@export var card_draw_sound : AudioStream
+@onready var card_draw_audio = $"CardDrawAudio"
+
+@export var shield_sound : AudioStream
+@onready var shield_audio = $"ShieldAudio"
+
+@export var clubs_sound : AudioStream
+@onready var clubs_audio = $"ClubsAudio"
+
 func init_gamerules():
 	init_timer(turn_timer)
 
@@ -42,9 +57,11 @@ func _ready() -> void:
 func start_game():
 	get_node("../ReplayButton").hide()
 	get_node("../ExitButton").hide()
+	get_node("../CardBattleRules").hide()
 	can_play_card = false
 	more_draws_allowed = true
 	draw_cards_to_hands(cards_per_round)
+	card_draw_audio.play()
 	more_draws_allowed = false
 	round_num = 1
 	
@@ -105,6 +122,7 @@ func change_play_text(condition):
 	card_text.modulate.a = 1
 
 func commence_turn(players_card):
+	card_draw_audio.play()
 	can_play_card = false
 	print("turn commencing.")
 	var opponents_hand = $"../EnemyHand"
@@ -167,6 +185,7 @@ func commence_turn(players_card):
 			round_label.text = "[center]" + "Round " + str + "[/center]"
 			round_label.modulate.a = 1
 			get_node("RoundLabel/AnimationPlayer").play("shake_text")
+			hit_audio.play()
 			
 			game_timer.start()
 			await game_timer.timeout
@@ -182,6 +201,7 @@ func commence_turn(players_card):
 			more_draws_allowed = true
 			draw_cards_to_hands(cards_per_round)
 			more_draws_allowed = false
+			card_draw_audio.play()
 	can_play_card = true
 	
 	print("can play card?", can_play_card)
@@ -211,16 +231,25 @@ func handle_card_suit_effects(attacking_card, defending_card, is_player_attack):
 			player_clubs_bonus += attacking_base_value
 		else:
 			opponent_clubs_bonus += attacking_base_value
+		clubs_audio.play()
 	if attacking_suit == "Spades":
 		if is_player_attack:
 			attacking_value = handle_clubs(attacking_value, "player")
-			enemy_hp -= attacking_value
-			animate_healths("enemy", "red")
+			enemy_hp = max(enemy_hp - attacking_value, 0)
+			var tween = get_tree().create_tween()
+			tween.tween_property(get_node("EnemyHP"), "modulate", Color.RED, .1)
+			tween.tween_property(get_node("EnemyHP"), "modulate", Color.WHITE, .1)
+			get_node("EnemyLifeIcon/AnimationPlayer").play("heart_shake")
 			update_healths()
 		else:
 			attacking_value = handle_clubs(attacking_value, "enemy")
-			player_hp -= attacking_value
+			player_hp = max(player_hp - attacking_value, 0)
+			var tween = get_tree().create_tween()
+			tween.tween_property(get_node("PlayerHP"), "modulate", Color.RED, .1)
+			tween.tween_property(get_node("PlayerHP"), "modulate", Color.WHITE, .1)
+			get_node("PlayerLifeIcon/AnimationPlayer").play("heart_shake")
 			update_healths()
+		hit_audio.play()
 	
 	if attacking_suit == "Hearts":
 		if is_player_attack:
@@ -231,7 +260,7 @@ func handle_card_suit_effects(attacking_card, defending_card, is_player_attack):
 			else:
 				opponent_armor = 0
 			change_health(attacking_value, "enemy")
-			change_health(floor(attacking_value / 2), "player")
+			change_health(-1 * floor(attacking_base_value / 2), "player")
 		else:
 			attacking_value = handle_clubs(attacking_value, "enemy")
 			attacking_value = max(0, attacking_value - player_armor)
@@ -240,10 +269,11 @@ func handle_card_suit_effects(attacking_card, defending_card, is_player_attack):
 			else:
 				player_armor = 0
 			change_health(attacking_value, "player")
-			change_health(floor(attacking_value / 2), "enemy")
+			change_health(-1 * floor(attacking_base_value / 2), "enemy")
 	if attacking_suit == "Diamonds":
 		if is_player_attack:
 			player_shield += floor(attacking_value / 2)
+			shield_audio.play()
 			attacking_value = handle_clubs(attacking_value, "player")
 			attacking_value = max(0, attacking_value - opponent_armor)
 			if attacking_value == 0:
@@ -253,6 +283,7 @@ func handle_card_suit_effects(attacking_card, defending_card, is_player_attack):
 			change_health(attacking_value, "enemy")
 		else:
 			opponent_shield += floor(attacking_value / 2)
+			shield_audio.play()
 			attacking_value = handle_clubs(attacking_value, "enemy")
 			attacking_value = max(0, attacking_value - player_armor)
 			if attacking_value == 0:
@@ -276,11 +307,13 @@ func handle_card_suit_effects(attacking_card, defending_card, is_player_attack):
 			opponent_shield += defending_value
 		else:
 			player_shield += defending_value
+		shield_audio.play()
 	if defending_suit == "Clubs":
 		if is_player_attack:
 			opponent_armor = max(floor(defending_value / 2), opponent_armor)
 		else:
 			player_armor = max(floor(defending_value / 2), player_armor)
+		clubs_audio.play()
 	if defending_suit == "Spades":
 		if is_player_attack:
 			change_health(floor(defending_value / 2), "player")
@@ -288,13 +321,18 @@ func handle_card_suit_effects(attacking_card, defending_card, is_player_attack):
 			change_health(floor(defending_value / 2), "enemy")
 			
 	update_healths()
-	game_timer.start()
-	await game_timer.timeout
 	if player_hp <= 0:
+		player_hp = 0
+		update_healths()
 		game_over("lose")
 	if enemy_hp <= 0:
+		enemy_hp = 0
+		update_healths()
 		game_over("win")
 	if player_hp <= 0 and enemy_hp <= 0:
+		player_hp = 0
+		enemy_hp = 0
+		update_healths()
 		game_over("tie")
 
 func change_health(damage, player):
@@ -303,33 +341,46 @@ func change_health(damage, player):
 		if damage < 0:
 			player_hp = min(player_max_hp, player_hp - damage)
 			update_healths()
+			var tween = get_tree().create_tween()
+			tween.tween_property(get_node("PlayerHP"), "modulate", Color.GREEN, .1)
+			tween.tween_property(get_node("PlayerHP"), "modulate", Color.WHITE, .1)
+			get_node("PlayerLifeIcon/AnimationPlayer").play("heart_shake")
+			heal_audio.play()
 			return
 		var overflow_damage = damage - player_shield
 		if overflow_damage < 0:
 			player_shield -= damage
 			update_healths()
 			return
-		player_hp -= overflow_damage
+		player_hp = max(player_hp - overflow_damage, 0)
 		var tween = get_tree().create_tween()
 		tween.tween_property(get_node("PlayerHP"), "modulate", Color.RED, .1)
 		tween.tween_property(get_node("PlayerHP"), "modulate", Color.WHITE, .1)
 		get_node("PlayerLifeIcon/AnimationPlayer").play("heart_shake")
+		hit_audio.play()
 		player_shield = 0
 		update_healths()
 	else:
 		if damage < 0:
 			enemy_hp = min(enemy_max_hp, enemy_hp - damage)
 			update_healths()
+			var tween = get_tree().create_tween()
+			tween.tween_property(get_node("EnemyHP"), "modulate", Color.GREEN, .1)
+			tween.tween_property(get_node("EnemyHP"), "modulate", Color.WHITE, .1)
+			get_node("EnemyLifeIcon/AnimationPlayer").play("heart_shake")
+			heal_audio.play()
 			return
 		var overflow_damage = damage - opponent_shield
 		if overflow_damage < 0:
 			opponent_shield -= damage
 			update_healths()
 			return
-		enemy_hp -= overflow_damage
+		enemy_hp = max(enemy_hp - overflow_damage, 0)
 		var tween = get_tree().create_tween()
 		tween.tween_property(get_node("EnemyHP"), "modulate", Color.RED, .1)
 		tween.tween_property(get_node("EnemyHP"), "modulate", Color.WHITE, .1)
+		get_node("EnemyLifeIcon/AnimationPlayer").play("heart_shake")
+		hit_audio.play()
 		opponent_shield = 0
 		update_healths()
 
@@ -342,10 +393,6 @@ func handle_clubs(val, player) -> int:
 		var new_dam = val + opponent_clubs_bonus
 		opponent_clubs_bonus = 0
 		return new_dam
-		
-func animate_healths(player, color):
-	if player == "enemy" and color == "red":
-		get_node("AnimationPlayer").play("enemy_take_damage")
 	
 func update_healths():
 	get_node("EnemyHP").text = "[center]" + str(enemy_hp) + "[/center]"
@@ -380,6 +427,8 @@ func update_healths():
 	else: get_node("EnemyLifeIcon").texture = empty_hp_icon
 	
 func game_over(condition):
+	game_timer.start()
+	await game_timer.timeout
 	if condition == "win":
 		get_node("GameOverLabel").text = "[center]You Win![/center]"
 	elif condition == "lose":
@@ -387,8 +436,8 @@ func game_over(condition):
 	else: get_node("GameOverLabel").text = "[center]It's a draw."
 	get_node("GameOverLabel").modulate.a = 1
 	get_node("PlayCardText").modulate.a = 0
-	get_node("AttackIcon").queue_free()
-	get_node("DefendIcon").queue_free()
+	get_node("AttackIcon").hide()
+	get_node("DefendIcon").hide()
 	can_play_card = false
 	get_node("../ReplayButton").show()
 	get_node("../ExitButton").show()
@@ -400,3 +449,7 @@ func _on_replay_button_pressed() -> void:
 
 func _on_exit_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/MainMenuScene.tscn")
+
+
+func _on_rules_button_pressed() -> void:
+	get_node("../CardBattleRules").show()

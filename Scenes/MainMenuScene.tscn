@@ -165,10 +165,10 @@ fit_content = true
 z_index = -1000
 texture = ExtResource("4_y2uu5")
 
-[connection signal="pressed" from="BlackjackButton" to="." method="_on_blackjack_button_pressed"]
 [connection signal="pressed" from="BlackjackButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="CardbattleButton" to="." method="_on_cardbattle_button_pressed"]
+[connection signal="pressed" from="BlackjackButton" to="." method="_on_blackjack_button_pressed"]
 [connection signal="pressed" from="CardbattleButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CardbattleButton" to="." method="_on_cardbattle_button_pressed"]
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

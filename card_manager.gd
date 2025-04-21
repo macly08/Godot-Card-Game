@@ -12,6 +12,9 @@ var card_being_dragged
 var is_hovering_on_card
 var player_hand_reference
 
+@export var card_hover_sound : AudioStream
+@onready var card_hover_audio = $"CardHoverAudio"
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player_hand_reference = $"../PlayerHand"
@@ -60,6 +63,7 @@ func on_left_mouse_button_released():
 		finish_drag()
 
 func on_hover_over_card(card):
+	card_hover_audio.play()
 	if !is_hovering_on_card:
 		is_hovering_on_card = true
 		highlight_card(card, true)

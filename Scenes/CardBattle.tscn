@@ -1,23 +1,29 @@
-[gd_scene load_steps=31 format=3 uid="uid://8militokl5i2"]
+[gd_scene load_steps=39 format=3 uid="uid://8militokl5i2"]
 
 [ext_resource type="Script" path="res://Deck.gd" id="1_makox"]
 [ext_resource type="Texture2D" uid="uid://bfpasjan3boqq" path="res://CardGameResources/Assets/Images/CardBack.png" id="2_b6e8m"]
 [ext_resource type="Script" path="res://card_manager.gd" id="3_kg26c"]
 [ext_resource type="FontFile" uid="uid://xcke3ars76xs" path="res://CardGameResources/Assets/Fonts/CooperBits.ttf" id="3_yxs1m"]
 [ext_resource type="Script" path="res://CardBattleGameManager.gd" id="4_np54o"]
+[ext_resource type="AudioStream" uid="uid://3kksykgeka0s" path="res://CardGameResources/Assets/Audio/338229__fachii__button-hover.wav" id="7_2fspo"]
 [ext_resource type="Texture2D" uid="uid://dh6fmhyvxt70x" path="res://CardGameResources/Assets/Images/ShieldIcon.png" id="8_tmajm"]
 [ext_resource type="Script" path="res://InputManager.gd" id="8_vavm0"]
 [ext_resource type="Script" path="res://EnemyHand.gd" id="8_vsv3w"]
 [ext_resource type="Texture2D" uid="uid://b7e0oqpgm8i84" path="res://CardGameResources/Assets/Images/ClubsArmorIcon.png" id="9_0hkus"]
 [ext_resource type="Script" path="res://PlayerHand.gd" id="9_5cl68"]
+[ext_resource type="AudioStream" uid="uid://ca1i7ywy5t34m" path="res://CardGameResources/Assets/Audio/459611__bolkmar__fx-slime-click.wav" id="9_lrbpo"]
 [ext_resource type="Texture2D" uid="uid://l3ibsxj1m3yn" path="res://CardGameResources/Assets/Images/CardTableBackground2.png" id="9_r0hem"]
+[ext_resource type="AudioStream" uid="uid://deyoumkqkm3cl" path="res://CardGameResources/Assets/Audio/457767__partheeban__turnpage.mp3" id="10_1mtsu"]
 [ext_resource type="Texture2D" uid="uid://8n0o5o6knknq" path="res://CardGameResources/Assets/Images/AttackIcon.png" id="10_u46c6"]
 [ext_resource type="Texture2D" uid="uid://dvqtlibym4vf" path="res://CardGameResources/Assets/Images/ClubsAttackIcon.png" id="10_whn5y"]
+[ext_resource type="AudioStream" uid="uid://cy33w4c1cn0jf" path="res://CardGameResources/Assets/Audio/682635__bastianhallo__magic-spell.wav" id="11_e2n8g"]
 [ext_resource type="Texture2D" uid="uid://cad1kl30bsq7q" path="res://CardGameResources/Assets/Images/DefendIcon.png" id="11_yet4x"]
+[ext_resource type="AudioStream" uid="uid://chdonplwd2fnr" path="res://CardGameResources/Assets/Audio/407481__loyalty_freak_music__equip.mp3" id="12_0loc1"]
 [ext_resource type="PackedScene" uid="uid://cpduspx8j5mic" path="res://Scenes/ShakeText.tscn" id="13_fbc27"]
 [ext_resource type="Texture2D" uid="uid://ctxiluob0qed3" path="res://CardGameResources/Assets/Images/LifeIconFull.png" id="14_ic4a8"]
 [ext_resource type="Texture2D" uid="uid://bskbnsehy4t0n" path="res://CardGameResources/Assets/Images/LifeIconBackdrop.png" id="15_edmek"]
 [ext_resource type="Texture2D" uid="uid://3kfmgv3ibn3m" path="res://CardGameResources/Assets/Images/ButtonSpriteTemp.png" id="16_ays75"]
+[ext_resource type="AudioStream" uid="uid://y2iua8nuwki8" path="res://CardGameResources/Assets/Audio/361636__jofae__8-bit-slam.mp3" id="19_ohasm"]
 
 [sub_resource type="Animation" id="Animation_xh832"]
 length = 0.5
@@ -49,67 +55,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../EnemyHP:modulate")
+tracks/2/path = NodePath("../Round3Text:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../EnemyHP:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1471, 300)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("../Round3Text:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
 "values": [Vector2(396, 583)]
-}
-
-[sub_resource type="Animation" id="Animation_egcvy"]
-resource_name = "enemy_take_damage"
-length = 0.1
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../EnemyHP:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.932603, 0.202066, 0, 1), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../EnemyHP:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.03, 0.06, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1471, 300), Vector2(1491, 300), Vector2(1451, 300), Vector2(1471, 300)]
 }
 
 [sub_resource type="Animation" id="Animation_ds8xb"]
@@ -188,7 +141,6 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rybwy"]
 _data = {
 "RESET": SubResource("Animation_xh832"),
-"enemy_take_damage": SubResource("Animation_egcvy"),
 "player_attack_icons": SubResource("Animation_ds8xb"),
 "player_defense_icons": SubResource("Animation_r14xn"),
 "shake_text": SubResource("Animation_h3n7g")
@@ -231,6 +183,21 @@ _data = {
 "shake_text": SubResource("Animation_0prwe")
 }
 
+[sub_resource type="Animation" id="Animation_0qunx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1679, 727)]
+}
+
 [sub_resource type="Animation" id="Animation_q58id"]
 resource_name = "heart_shake"
 length = 0.15
@@ -248,7 +215,13 @@ tracks/0/keys = {
 "values": [Vector2(1679, 727), Vector2(1670, 727), Vector2(1688, 727), Vector2(1679, 727)]
 }
 
-[sub_resource type="Animation" id="Animation_0qunx"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nue8f"]
+_data = {
+"RESET": SubResource("Animation_0qunx"),
+"heart_shake": SubResource("Animation_q58id")
+}
+
+[sub_resource type="Animation" id="Animation_lb3l2"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -260,13 +233,30 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1679, 727)]
+"values": [Vector2(1679, 300)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_nue8f"]
+[sub_resource type="Animation" id="Animation_rsrue"]
+resource_name = "heart_shake"
+length = 0.15
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1679, 300), Vector2(1670, 300), Vector2(1688, 300), Vector2(1679, 300)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dqeaf"]
 _data = {
-"RESET": SubResource("Animation_0qunx"),
-"heart_shake": SubResource("Animation_q58id")
+"RESET": SubResource("Animation_lb3l2"),
+"heart_shake": SubResource("Animation_rsrue")
 }
 
 [node name="Main" type="Node2D"]
@@ -322,8 +312,28 @@ script = ExtResource("8_vsv3w")
 [node name="CardManager" type="Node2D" parent="."]
 script = ExtResource("3_kg26c")
 
+[node name="CardHoverAudio" type="AudioStreamPlayer" parent="CardManager"]
+stream = ExtResource("7_2fspo")
+
 [node name="CardGameManager" type="Node" parent="."]
 script = ExtResource("4_np54o")
+
+[node name="HitAudio" type="AudioStreamPlayer" parent="CardGameManager"]
+stream = ExtResource("19_ohasm")
+volume_db = -10.0
+
+[node name="HealAudio" type="AudioStreamPlayer" parent="CardGameManager"]
+stream = ExtResource("9_lrbpo")
+volume_db = -5.0
+
+[node name="CardDrawAudio" type="AudioStreamPlayer" parent="CardGameManager"]
+stream = ExtResource("10_1mtsu")
+
+[node name="ShieldAudio" type="AudioStreamPlayer" parent="CardGameManager"]
+stream = ExtResource("11_e2n8g")
+
+[node name="ClubsAudio" type="AudioStreamPlayer" parent="CardGameManager"]
+stream = ExtResource("12_0loc1")
 
 [node name="PlayCardText" type="RichTextLabel" parent="CardGameManager"]
 modulate = Color(1, 1, 1, 0)
@@ -346,10 +356,12 @@ fit_content = true
 [node name="PlayerHP" type="RichTextLabel" parent="CardGameManager"]
 offset_left = 1608.0
 offset_top = 603.0
-offset_right = 1656.0
-offset_bottom = 643.0
-scale = Vector2(3, 3)
+offset_right = 1758.0
+offset_bottom = 692.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 20
 theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
 text = "[center]50"
 
@@ -371,21 +383,6 @@ theme_override_fonts/normal_font = ExtResource("3_yxs1m")
 theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
 text = "[center]0[/center]"
-
-[node name="EnemyHP" type="RichTextLabel" parent="CardGameManager"]
-anchors_preset = -1
-anchor_left = 0.821
-anchor_top = 0.167
-anchor_right = 0.934
-anchor_bottom = 0.278
-offset_left = -105.32
-offset_top = 119.64
-offset_right = -250.28
-offset_bottom = 39.76
-scale = Vector2(3, 3)
-theme_override_fonts/normal_font = ExtResource("3_yxs1m")
-bbcode_enabled = true
-text = "[center]50"
 
 [node name="PlayerArmor" type="RichTextLabel" parent="CardGameManager"]
 anchors_preset = 8
@@ -646,6 +643,42 @@ z_index = -1
 scale = Vector2(1.1, 1.1)
 texture = ExtResource("15_edmek")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CardGameManager/EnemyLifeIcon"]
+libraries = {
+"": SubResource("AnimationLibrary_dqeaf")
+}
+
+[node name="RulesButton" type="TextureButton" parent="CardGameManager"]
+visible = false
+offset_left = 1654.0
+offset_top = 9.0
+offset_right = 1910.0
+offset_bottom = 144.0
+texture_normal = ExtResource("16_ays75")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CardGameManager/RulesButton"]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 255.0
+offset_bottom = 93.0
+mouse_filter = 1
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+text = "[center]Rules"
+
+[node name="EnemyHP" type="RichTextLabel" parent="CardGameManager"]
+offset_left = 1617.0
+offset_top = 177.0
+offset_right = 1744.0
+offset_bottom = 237.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 20
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]50"
+
 [node name="InputManager" type="Node2D" parent="."]
 script = ExtResource("8_vavm0")
 
@@ -656,6 +689,21 @@ texture = ExtResource("9_r0hem")
 
 [node name="GameTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="CardBattleRules" type="RichTextLabel" parent="."]
+offset_left = 368.0
+offset_top = 384.0
+offset_right = 1507.0
+offset_bottom = 759.0
+bbcode_enabled = true
+text = "[center]Card Battle Rules: 
+Players will take turns between playing cards for attack and defense. Card suits have different effects depending on which side they are played.
+Hearts - On attack: Heals the player for half of the damage they deal. On defense: Heals the player for the full value of the card.
+Diamonds - On attack: Creates a shield worth half of the value of the card, rounded down. On defense: Creates a shield worth the value of the card.
+Clubs - On attack: Increases Clubs attack bonus by value amount. Your next attack will deal this much bonus damage. On defense: Increases Clubs defense bonus by half of the value amount, rounded down. The opponents next attack that hits will deal this much less damage. If the damage does not exceed the defense bonus, it will drop by 2 points instead.
+Spades - On attack: Ignores all effects of clubs armor and shields. On defense: deals half of the value as retaliation damage after you're attacked.
+
+The game is split into 3 rounds. Each round consists of 5 turns. A turn consists of both players picking a card to play. Players will play all of their cards until they have none left, at which point a new round will start, and new cards will be drawn. If it's round 3, base values for cards played on attack will be doubled. A player loses when they reach 0 health. If the third round ends and neither played has lost, the player with higher HP will win."
 
 [node name="ReplayButton" type="TextureButton" parent="."]
 z_index = 10
@@ -703,5 +751,7 @@ theme_override_font_sizes/normal_font_size = 56
 bbcode_enabled = true
 text = "[center]Exit"
 
+[connection signal="pressed" from="CardGameManager/RulesButton" to="CardGameManager" method="_on_rules_button_pressed"]
+[connection signal="pressed" from="ReplayButton" to="Deck" method="_on_replay_button_pressed"]
 [connection signal="pressed" from="ReplayButton" to="CardGameManager" method="_on_replay_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="CardGameManager" method="_on_exit_button_pressed"]
