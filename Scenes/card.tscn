@@ -212,7 +212,6 @@ offset_bottom = 48.0
 theme_override_fonts/normal_font = ExtResource("4_ls3va")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "[center"
 
 [node name="SuitImage" type="Sprite2D" parent="."]
 position = Vector2(-24, -48)

@@ -18,6 +18,9 @@ script = ExtResource("2_or1ju")
 [node name="Deck" parent="." index="5"]
 position = Vector2(691.975, 528)
 
+[node name="RichTextLabel" parent="Deck" index="2"]
+bbcode_enabled = true
+
 [node name="EndTurnButton" parent="." index="7"]
 offset_left = 652.0
 offset_top = 338.0
