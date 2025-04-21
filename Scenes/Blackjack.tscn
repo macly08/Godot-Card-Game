@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dxp2wfslgwymt"]
+[gd_scene load_steps=5 format=3 uid="uid://dxp2wfslgwymt"]
 
 [ext_resource type="PackedScene" uid="uid://1vl08t4ulppt" path="res://Scenes/CardMechanics.tscn" id="1_hsyf5"]
+[ext_resource type="AudioStream" uid="uid://3kksykgeka0s" path="res://CardGameResources/Assets/Audio/338229__fachii__button-hover.wav" id="2_170wv"]
 [ext_resource type="Script" path="res://BlackjackGameManager.gd" id="2_a2uf2"]
 [ext_resource type="Script" path="res://EnemyHand.gd" id="2_or1ju"]
 
 [node name="Main" instance=ExtResource("1_hsyf5")]
+
+[node name="CardHoverAudio" type="AudioStreamPlayer" parent="CardManager" index="0"]
+stream = ExtResource("2_170wv")
 
 [node name="CardSlot" parent="." index="1"]
 visible = false
@@ -17,6 +21,9 @@ script = ExtResource("2_or1ju")
 
 [node name="Deck" parent="." index="5"]
 position = Vector2(691.975, 528)
+
+[node name="RichTextLabel" parent="Deck" index="2"]
+bbcode_enabled = true
 
 [node name="EndTurnButton" parent="." index="7"]
 offset_left = 652.0

@@ -60,6 +60,7 @@ func draw_card(is_my_card, hand: Node2D = $"../PlayerHand"):
 	#Display proper info on the card
 	var card_image_path = str("res://CardGameResources/Assets/Images/"+str(card_drawn[1])+".png")
 	new_card.get_node("SuitImage").texture = load(card_image_path)
+	new_card.get_node("SuitImage2").texture = load(card_image_path)
 	#new_card.get_node("Suit").text = str(card_drawn[1])
 	var val_text = ""
 	match card_drawn[0]:

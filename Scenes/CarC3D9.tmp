@@ -1,0 +1,317 @@
+[gd_scene load_steps=18 format=3 uid="uid://8militokl5i2"]
+
+[ext_resource type="Script" path="res://Deck.gd" id="1_makox"]
+[ext_resource type="Texture2D" uid="uid://bfpasjan3boqq" path="res://CardGameResources/Assets/Images/CardBack.png" id="2_b6e8m"]
+[ext_resource type="Script" path="res://card_manager.gd" id="3_kg26c"]
+[ext_resource type="FontFile" uid="uid://xcke3ars76xs" path="res://CardGameResources/Assets/Fonts/CooperBits.ttf" id="3_yxs1m"]
+[ext_resource type="Script" path="res://CardBattleGameManager.gd" id="4_np54o"]
+[ext_resource type="Texture2D" uid="uid://dh6fmhyvxt70x" path="res://CardGameResources/Assets/Images/ShieldIcon.png" id="8_tmajm"]
+[ext_resource type="Script" path="res://InputManager.gd" id="8_vavm0"]
+[ext_resource type="Script" path="res://EnemyHand.gd" id="8_vsv3w"]
+[ext_resource type="Texture2D" uid="uid://b7e0oqpgm8i84" path="res://CardGameResources/Assets/Images/ClubsArmorIcon.png" id="9_0hkus"]
+[ext_resource type="Script" path="res://PlayerHand.gd" id="9_5cl68"]
+[ext_resource type="Texture2D" uid="uid://l3ibsxj1m3yn" path="res://CardGameResources/Assets/Images/CardTableBackground2.png" id="9_r0hem"]
+[ext_resource type="Texture2D" uid="uid://8n0o5o6knknq" path="res://CardGameResources/Assets/Images/AttackIcon.png" id="10_u46c6"]
+[ext_resource type="Texture2D" uid="uid://cad1kl30bsq7q" path="res://CardGameResources/Assets/Images/DefendIcon.png" id="11_yet4x"]
+
+[sub_resource type="Animation" id="Animation_xh832"]
+length = 0.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AttackIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(960, 256), Vector2(1248, 506), Vector2(960, 756)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../DefendIcon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(960, 756), Vector2(600, 506), Vector2(960, 256)]
+}
+
+[sub_resource type="Animation" id="Animation_ds8xb"]
+resource_name = "icon_top_to_bottom"
+length = 0.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AttackIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(960, 256), Vector2(1250, 506), Vector2(960, 756)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../DefendIcon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(960, 756), Vector2(670, 506), Vector2(960, 256)]
+}
+
+[sub_resource type="Animation" id="Animation_r14xn"]
+resource_name = "player_defense_icons"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../DefendIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(960, 256), Vector2(1250, 506), Vector2(960, 756)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AttackIcon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(960, 756), Vector2(670, 506), Vector2(960, 256)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rybwy"]
+_data = {
+"RESET": SubResource("Animation_xh832"),
+"player_attack_icons": SubResource("Animation_ds8xb"),
+"player_defense_icons": SubResource("Animation_r14xn")
+}
+
+[node name="Main" type="Node2D"]
+
+[node name="Deck" type="Node2D" parent="."]
+z_index = -2
+position = Vector2(240, 540)
+script = ExtResource("1_makox")
+
+[node name="Sprite2D" type="Sprite2D" parent="Deck"]
+z_index = -2
+texture = ExtResource("2_b6e8m")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Deck"]
+z_index = -3
+position = Vector2(0, 2.5)
+texture = ExtResource("2_b6e8m")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Deck"]
+z_index = -4
+position = Vector2(0, 5)
+texture = ExtResource("2_b6e8m")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Deck"]
+modulate = Color(0, 0, 0, 1)
+offset_left = -63.0
+offset_top = 72.0
+offset_right = 63.0
+offset_bottom = 144.0
+theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+theme_override_font_sizes/normal_font_size = 96
+bbcode_enabled = true
+text = "[center]52[/center]"
+fit_content = true
+
+[node name="PlayerHand" type="Node2D" parent="."]
+script = ExtResource("9_5cl68")
+
+[node name="EnemyHand" type="Node2D" parent="."]
+position = Vector2(0, 120)
+script = ExtResource("8_vsv3w")
+
+[node name="CardManager" type="Node2D" parent="."]
+script = ExtResource("3_kg26c")
+
+[node name="CardGameManager" type="Node" parent="."]
+script = ExtResource("4_np54o")
+
+[node name="PlayCardText" type="RichTextLabel" parent="CardGameManager"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -60.0
+offset_right = 300.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+text = "[center]Play a card for Attack![/center]"
+fit_content = true
+
+[node name="PlayerHP" type="RichTextLabel" parent="CardGameManager"]
+offset_left = 1471.0
+offset_top = 720.0
+offset_right = 1599.0
+offset_bottom = 760.0
+scale = Vector2(3, 3)
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+bbcode_enabled = true
+text = "[center]Your HP: 50"
+
+[node name="EnemyHP" type="RichTextLabel" parent="CardGameManager"]
+offset_left = 1471.0
+offset_top = 300.0
+offset_right = 1605.0
+offset_bottom = 340.0
+scale = Vector2(3, 3)
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+bbcode_enabled = true
+text = "[center]Enemy HP: 50"
+
+[node name="GameOverLabel" type="RichTextLabel" parent="CardGameManager"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 620.0
+offset_top = 464.0
+offset_right = 724.0
+offset_bottom = 493.0
+scale = Vector2(5, 5)
+text = "Game Over!"
+
+[node name="PlayerShield" type="RichTextLabel" parent="CardGameManager"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 480.0
+offset_top = 360.0
+offset_right = 732.0
+offset_bottom = 468.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]0[/center]"
+
+[node name="PlayerArmor" type="RichTextLabel" parent="CardGameManager"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 596.0
+offset_top = 360.0
+offset_right = 848.0
+offset_bottom = 468.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]0[/center]"
+
+[node name="EnemyShield" type="RichTextLabel" parent="CardGameManager"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 480.0
+offset_top = -70.0
+offset_right = 732.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]0[/center]"
+
+[node name="EnemyArmor" type="RichTextLabel" parent="CardGameManager"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 596.0
+offset_top = -70.0
+offset_right = 848.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_yxs1m")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]0[/center]"
+
+[node name="PlayerShieldIcon" type="Sprite2D" parent="CardGameManager"]
+position = Vector2(1564, 850)
+scale = Vector2(2, 2)
+texture = ExtResource("8_tmajm")
+
+[node name="PlayerArmorIcon" type="Sprite2D" parent="CardGameManager"]
+position = Vector2(1680, 850)
+scale = Vector2(2, 2)
+texture = ExtResource("9_0hkus")
+
+[node name="EnemyShieldIcon" type="Sprite2D" parent="CardGameManager"]
+position = Vector2(1564, 420)
+scale = Vector2(2, 2)
+texture = ExtResource("8_tmajm")
+
+[node name="EnemyArmorIcon" type="Sprite2D" parent="CardGameManager"]
+position = Vector2(1680, 420)
+scale = Vector2(2, 2)
+texture = ExtResource("9_0hkus")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CardGameManager"]
+root_node = NodePath("../TurnIcons")
+libraries = {
+"": SubResource("AnimationLibrary_rybwy")
+}
+
+[node name="AttackIcon" type="Sprite2D" parent="CardGameManager"]
+position = Vector2(960, 256)
+scale = Vector2(2, 2)
+texture = ExtResource("10_u46c6")
+
+[node name="DefendIcon" type="Sprite2D" parent="CardGameManager"]
+position = Vector2(960, 756)
+scale = Vector2(2, 2)
+texture = ExtResource("11_yet4x")
+
+[node name="TurnIcons" type="Node" parent="CardGameManager"]
+
+[node name="InputManager" type="Node2D" parent="."]
+script = ExtResource("8_vavm0")
+
+[node name="Backdrop" type="Sprite2D" parent="."]
+z_index = -100
+position = Vector2(963, 539)
+texture = ExtResource("9_r0hem")
+
+[node name="GameTimer" type="Timer" parent="."]
